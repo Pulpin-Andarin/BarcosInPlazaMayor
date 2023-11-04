@@ -2,7 +2,7 @@
 
 
 #include "BoatShootComponent.h"
-#include <BoatsInPlazaMayor/BoatProjectile.h>
+#include <BoatsInPlazaMayor/Projectiles/BoatProjectile.h>
 #include "Components/SphereComponent.h"
 
 // Sets default values for this component's properties
