@@ -94,14 +94,14 @@ void ABoat::Move(const FInputActionValue& Value)
    
 
     //Calculo de fuerza
-    float ForceX = MovementVector.X  ;
+    float ForceX = MovementVector.X;
     float ForceY = MovementVector.Y;
 
 
     FVector Forward = Root->GetForwardVector();
     FVector Right = Root->GetRightVector();
 
-    FVector ForceXToAdd = Right * ForceX*100*0.05;
+    FVector ForceXToAdd = Right * ForceX* 5;
     FVector ForceYToAdd = Forward * ForceY*0.05;
 
     // Aplicamos la fuerza
@@ -119,18 +119,19 @@ void ABoat::Move(const FInputActionValue& Value)
 
     FRotator ActorRotation = GetActorRotation();
 
-    //UE_LOG(LogTemplateCharacter, Error, TEXT("FuerzaX: '%d'"), ForceXToAdd.Length());
-    UE_LOG(LogTemplateCharacter, Error, TEXT("Velocidad: '%i'"), (int)Velocity.Length());
 
     FRotator lerpedvalue = ActorRotation;
-    if ((int)Velocity.Length() < 180) {
-        lerpedvalue = FMath::RInterpTo(ActorRotation, DesiredRotation, GetWorld()->GetDeltaSeconds(),  0.0010f);
+    float fvalue = (int)Velocity.Length() * 0.001f;
+    UE_LOG(LogTemplateCharacter, Error, TEXT("valor: '%i'"), (int)fvalue);
+    if (fvalue > 100.0f) {
+        fvalue = 100.0f;
     }
-    else {
-       lerpedvalue = FMath::RInterpTo(ActorRotation, DesiredRotation, GetWorld()->GetDeltaSeconds(), 100.0f);
-    }
+    UE_LOG(LogTemplateCharacter, Error, TEXT("valorMod: '%i'"), (int)fvalue);
+    lerpedvalue = FMath::RInterpTo(ActorRotation, DesiredRotation, GetWorld()->GetDeltaSeconds(), 0.01f * Speed );
+
     // Aplicamos la rotacion
     if (MovementVector.Y != -1) {
+
         SetActorRotation(FRotator(ActorRotation.Pitch, lerpedvalue.Yaw, ActorRotation.Roll));
     }
 
