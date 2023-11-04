@@ -18,12 +18,14 @@ ABoatProjectile::ABoatProjectile()
   StaticMeshComponent->SetupAttachment(RootComponent);
 
   ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
+  ProjectileMovementComponent->UpdatedComponent = StaticMeshComponent;
   SetLifeSpan(5.f);
 }
 
 void ABoatProjectile::SetProjectileVelocity(float Velocity)
 {
-  ProjectileMovementComponent->MaxSpeed = Velocity;
+  ProjectileMovementComponent->MaxSpeed = Velocity * 1500;
+
   ProjectileMovementComponent->InitialSpeed = Velocity;
   this->ProjectileVelocity = Velocity;
 }
