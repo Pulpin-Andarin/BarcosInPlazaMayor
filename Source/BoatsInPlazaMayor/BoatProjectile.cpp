@@ -14,7 +14,7 @@ ABoatProjectile::ABoatProjectile()
   SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Component"));
   RootComponent = SphereComponent;
 
-  StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere Mesh Component"));
+  StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere Projectile Component"));
   StaticMeshComponent->SetupAttachment(RootComponent);
 
   ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
