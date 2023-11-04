@@ -39,10 +39,14 @@ public:
   float MaxImpulse = 5000.f;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
-  ABoatProjectile* BoatProjectile;
+  TSubclassOf<ABoatProjectile> BoatProjectileClass;
   /// --- Shoot Variables---
 
+
   UFUNCTION(BlueprintCallable)
-  float GetProjectileRadius();
+  void Shoot(FTransform Transform, float Velocity);
+
+  //UFUNCTION(BlueprintCallable)
+  //float GetProjectileRadius();
 
 };

@@ -33,13 +33,24 @@ void UBoatShootComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
   // ...
 }
 
-float UBoatShootComponent::GetProjectileRadius()
+void UBoatShootComponent::Shoot(FTransform Transform, float Velocity)
 {
-  if (IsValid(BoatProjectile))
-  {
-    return BoatProjectile->SphereComponent->GetScaledSphereRadius();
-  }
+  FActorSpawnParameters SpawnInfo;
+  SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-  return -1.f;
+  ABoatProjectile* ProjectileActor = GetWorld()->SpawnActorDeferred<ABoatProjectile>(BoatProjectileClass, Transform);
+  ProjectileActor->SetProjectileVelocity(Velocity);
+  ProjectileActor->FinishSpawning(Transform);
 }
 
+//
+//float UBoatShootComponent::GetProjectileRadius()
+//{
+//  if (IsValid(BoatProjectile))
+//  {
+//    return BoatProjectile->SphereComponent->GetScaledSphereRadius();
+//  }
+//
+//  return -1.f;
+//}
+//
