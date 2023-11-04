@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "TimerManager.h"
 #include "BoatShootComponent.generated.h"
 
 class ABoatProjectile;
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BOATSINPLAZAMAYOR_API UBoatShootComponent : public UActorComponent
 {
@@ -40,13 +42,38 @@ public:
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
   TSubclassOf<ABoatProjectile> BoatProjectileClass;
-  /// --- Shoot Variables---
 
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
+  bool bAiming = false;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shoot | Reloading", meta = (AllowPrivateAccess = "true"))
+  bool bReloadingLeft = false;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shoot | Reloading", meta = (AllowPrivateAccess = "true"))
+  bool bReloadingRight = false;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shoot | Reloading", meta = (AllowPrivateAccess = "true"))
+  float LeftReloadingTime = 2.0f;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shoot | Reloading", meta = (AllowPrivateAccess = "true"))
+  float RightReloadingTime = 2.0f;
+
+  /// --- Shoot Variables---
+  UFUNCTION(BlueprintCallable)
+  void StartReloadingLeftSide();
+
+  //UFUNCTION(BlueprintCallable)
+  void StartReloadingOnSide(bool& SideBool, float cooldown, FTimerDelegate& TimerCallback);
+
+  UFUNCTION(BlueprintCallable)
+  void StartReloadingRightSide();
 
   UFUNCTION(BlueprintCallable)
   void Shoot(FTransform Transform, float Velocity);
 
-  //UFUNCTION(BlueprintCallable)
-  //float GetProjectileRadius();
+  UFUNCTION()
+  void LeftReloadingComplete();
 
+  UFUNCTION()
+  void RightReloadingComplete();
 };
