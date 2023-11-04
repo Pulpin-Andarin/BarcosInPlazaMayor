@@ -33,7 +33,7 @@ public:
   USphereComponent* SphereComponent;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
-  UStaticMeshComponent* StaticMeshComponent;
+  UStaticMeshComponent* SphereProjectileComponent;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
   UProjectileMovementComponent* ProjectileMovementComponent;

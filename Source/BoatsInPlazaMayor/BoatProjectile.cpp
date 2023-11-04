@@ -14,11 +14,11 @@ ABoatProjectile::ABoatProjectile()
   SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Component"));
   RootComponent = SphereComponent;
 
-  StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere Projectile Component"));
-  StaticMeshComponent->SetupAttachment(RootComponent);
+  SphereProjectileComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere Projectile Component"));
+  SphereProjectileComponent->SetupAttachment(RootComponent);
 
   ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
-  ProjectileMovementComponent->UpdatedComponent = StaticMeshComponent;
+  ProjectileMovementComponent->UpdatedComponent = SphereProjectileComponent;
   SetLifeSpan(5.f);
 }
 
