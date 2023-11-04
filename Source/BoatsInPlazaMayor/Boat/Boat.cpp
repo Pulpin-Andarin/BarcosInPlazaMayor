@@ -55,6 +55,13 @@ void ABoat::BeginPlay()
     }
   }
 
+
+  if (Controller != nullptr)
+  {
+      Root->AddForce(FVector(0,0,0) * Root->GetMass(), NAME_None, true);
+      Root->AddForce(FVector(0, 0, 0) * Root->GetMass(), NAME_None, true);
+  }
+
 }
 
 // Called every frame
@@ -113,11 +120,12 @@ void ABoat::Move(const FInputActionValue& Value)
 
     // Calculo de rotacion 
 
-    FVector xVector{ GetActorRotation().Roll, 0.0f, 0.0f };
+    FVector xVector{GetActorRotation().Roll, 0.0f, 0.0f };
+    FRotator DesiredRotation = UKismetMathLibrary::MakeRotationFromAxes(Velocity, FVector::CrossProduct(FVector::UpVector, Velocity), FVector::UpVector);
 
+    FRotator ActorRotation = GetActorRotation();
 
-    FRotator lerpedvalue = ActorRotation;
-    lerpedvalue = FMath::RInterpTo(ActorRotation, DesiredRotation, GetWorld()->GetDeltaSeconds(), 0.01f * Speed );
+    FRotator lerpedvalue = FMath::RInterpTo(ActorRotation, DesiredRotation, GetWorld()->GetDeltaSeconds(), 0.01f * Speed );
 
     // Aplicamos la rotacion
     if (MovementVector.Y != -1) {
