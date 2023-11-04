@@ -2,26 +2,29 @@
 
 
 #include "BoatProjectile.h"
+#include <Components/SphereComponent.h>
 
 // Sets default values
 ABoatProjectile::ABoatProjectile()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+  // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+  PrimaryActorTick.bCanEverTick = true;
 
+  SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Component"));
+  StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere Mesh Component"));
 }
 
 // Called when the game starts or when spawned
 void ABoatProjectile::BeginPlay()
 {
-	Super::BeginPlay();
-	
+  Super::BeginPlay();
+
 }
 
 // Called every frame
 void ABoatProjectile::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+  Super::Tick(DeltaTime);
 
 }
 
