@@ -6,21 +6,38 @@
 #include "GameFramework/Actor.h"
 #include "BoatProjectile.generated.h"
 
+
+class USphereComponent;
+class UProjectileMovementComponent;
+
 UCLASS()
 class BOATSINPLAZAMAYOR_API ABoatProjectile : public AActor
 {
-	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ABoatProjectile();
+  GENERATED_BODY()
+
+public:
+
+  ABoatProjectile();
+  // Sets default values for this actor's properties
+  void SetProjectileVelocity(float Velocity);
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+  // Called when the game starts or when spawned
+  virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+public:
+  // Called every frame
+  virtual void Tick(float DeltaTime) override;
 
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
+  USphereComponent* SphereComponent;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
+  UStaticMeshComponent* StaticMeshComponent;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
+  UProjectileMovementComponent* ProjectileMovementComponent;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
+  float ProjectileVelocity = 0.f;
 };

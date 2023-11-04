@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "BoatShootComponent.generated.h"
 
-
+class ABoatProjectile;
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BOATSINPLAZAMAYOR_API UBoatShootComponent : public UActorComponent
 {
@@ -27,7 +27,7 @@ public:
 
   /// --- Shoot Variables---
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
-  float ImpulsIncrement = 400.f;
+  float ImpulsIncrement = 50.f;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
   float MinImpulse = 500.f;
@@ -37,7 +37,16 @@ public:
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
   float MaxImpulse = 5000.f;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
+  TSubclassOf<ABoatProjectile> BoatProjectileClass;
   /// --- Shoot Variables---
 
+
+  UFUNCTION(BlueprintCallable)
+  void Shoot(FTransform Transform, float Velocity);
+
+  //UFUNCTION(BlueprintCallable)
+  //float GetProjectileRadius();
 
 };
