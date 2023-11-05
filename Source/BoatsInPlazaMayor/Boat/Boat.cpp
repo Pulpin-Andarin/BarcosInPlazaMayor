@@ -14,6 +14,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/MovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
+#include "GameFramework/FloatingPawnMovement.h"
 
 // Sets default values
 ABoat::ABoat()
@@ -63,7 +64,7 @@ void ABoat::BeginPlay()
     }
   }
 
-  //FloatingMovementComponent = Cast<UFloatingMovementComponent>(FindComponentByClass(UFloatingMovementComponent::StaticClass()));
+  FloatingMovementComponent = Cast<UFloatingPawnMovement >(FindComponentByClass(UFloatingPawnMovement::StaticClass()));
 
   //if (Controller != nullptr)
   //{
@@ -223,5 +224,22 @@ void ABoat::Look(const FInputActionValue& Value)
     AddControllerYawInput(LookAxisVector.X);
     AddControllerPitchInput(LookAxisVector.Y);
   }
+}
+
+void ABoat::SlowVelocity(float Percent, float Time)
+{
+    if (FloatingMovementComponent != nullptr) {
+        ActualAcceleration = FloatingMovementComponent->Acceleration;
+        FloatingMovementComponent->Acceleration -= ActualAcceleration * Percent;
+    }
+    GetWorldTimerManager().ClearTimer(TimerHandle);
+    GetWorldTimerManager().SetTimer(TimerHandle, this, &ABoat::ResetAcceleration, Time, false);
+}
+
+void ABoat::ResetAcceleration()
+{
+    if (FloatingMovementComponent != nullptr) {
+        FloatingMovementComponent->Acceleration = ActualAcceleration;
+    }
 }
 
