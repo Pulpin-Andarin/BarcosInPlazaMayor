@@ -72,11 +72,17 @@ void UBoatShootComponent::Shoot(FTransform Transform, float Velocity)
 {
   FActorSpawnParameters SpawnInfo;
   SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-  ABoatProjectile* ProjectileActor = GetWorld()->SpawnActorDeferred<ABoatProjectile>(BoatProjectileClass, Transform);
-  ProjectileActor->SetProjectileVelocity(Velocity);
-  ProjectileActor->OwnerGunner = GetOwner();
-  Transform.SetScale3D(FVector(0.5, 0.5, 0.5));
-  ProjectileActor->FinishSpawning(Transform);
+  if (BoatProjectileClass)
+  {
+    ABoatProjectile* ProjectileActor = GetWorld()->SpawnActorDeferred<ABoatProjectile>(BoatProjectileClass, Transform);
+    if (ProjectileActor)
+    {
+      ProjectileActor->SetProjectileVelocity(Velocity);
+      ProjectileActor->OwnerGunner = GetOwner();
+      Transform.SetScale3D(FVector(0.5, 0.5, 0.5));
+      ProjectileActor->FinishSpawning(Transform);
+    }
+  }
 }
 
 void UBoatShootComponent::LeftReloadingComplete()
