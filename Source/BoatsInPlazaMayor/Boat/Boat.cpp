@@ -125,6 +125,13 @@ void ABoat::Move(const FInputActionValue& Value)
 
     // add movement 
 
+    if (MovementVector.X > 0) {
+        RotateBoatEvent.Broadcast(true);
+    }
+    else if (MovementVector.X < 0){
+        RotateBoatEvent.Broadcast(false);
+    }
+
     AddMovementInput(Root->GetRightVector(), MovementVector.X);
     if (MovementVector.Y != -1) {
       AddMovementInput(Root->GetForwardVector(), MovementVector.Y);

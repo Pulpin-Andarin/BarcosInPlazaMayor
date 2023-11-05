@@ -16,6 +16,7 @@ class UBoatShootComponent;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplate, Log, All);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FRotateBoat, bool, direccion);
 
 
 
@@ -69,6 +70,9 @@ public:
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
   UNiagaraComponent* LeftShoot;
+
+  UPROPERTY(BlueprintAssignable)
+  FRotateBoat RotateBoatEvent;
 
 protected:
   // Called when the game starts or when spawned
