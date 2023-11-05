@@ -37,6 +37,7 @@ void UBoatShootComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 void UBoatShootComponent::StartReloadingLeftSide()
 {
+  StartVfxLeft.Broadcast();
   FTimerDelegate TimerCallback;
   TimerCallback.BindLambda([this]
     {
@@ -48,6 +49,7 @@ void UBoatShootComponent::StartReloadingLeftSide()
 
 void UBoatShootComponent::StartReloadingRightSide()
 {
+    StartVfxRight.Broadcast();
   FTimerDelegate TimerCallback;
   TimerCallback.BindLambda([this]
     {
@@ -62,7 +64,6 @@ void UBoatShootComponent::StartReloadingOnSide(bool& SideBool, float cooldown, F
 {
   SideBool = true;
   FTimerHandle Handle;
-  
   GetWorld()->GetTimerManager().SetTimer(Handle, TimerCallback, cooldown, false);
 }
 
@@ -79,21 +80,16 @@ void UBoatShootComponent::Shoot(FTransform Transform, float Velocity)
 
 void UBoatShootComponent::LeftReloadingComplete()
 {
+    EndVfxLeft.Broadcast();
   bReloadingLeft = false;
 }
 
 void UBoatShootComponent::RightReloadingComplete()
 {
+    EndVfxRight.Broadcast();
   bReloadingRight = false;
 }
 
-void UBoatShootComponent::StartVfxReloading(FVector LocationToSpawn)
-{
-    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Smoke, LocationToSpawn);
-}
+ 
 
-void UBoatShootComponent::EndVfxReloading()
-{
-    
-}
 

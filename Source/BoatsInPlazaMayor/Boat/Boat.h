@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Logging/LogMacros.h"
+#include "NiagaraComponent.h"
 #include "Boat.generated.h"
 
 class USpringArmComponent;
@@ -15,6 +16,8 @@ class UBoatShootComponent;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplate, Log, All);
+
+
 
 UCLASS()
 class BOATSINPLAZAMAYOR_API ABoat : public APawn
@@ -61,7 +64,11 @@ public:
   UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
   UBoatShootComponent* BoatShootComponent;
 
-  
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+  UNiagaraComponent* RightShoot;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+  UNiagaraComponent* LeftShoot;
 
 protected:
   // Called when the game starts or when spawned
@@ -78,5 +85,6 @@ public:
 
   /** Called for looking input */
   void Look(const FInputActionValue& Value);
+
 
 };

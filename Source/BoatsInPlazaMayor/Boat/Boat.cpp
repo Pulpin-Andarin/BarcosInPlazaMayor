@@ -43,6 +43,10 @@ ABoat::ABoat()
 
   BoatShootComponent = CreateDefaultSubobject<UBoatShootComponent>(TEXT("BoatShootComponent"));
 
+  RightShoot = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Right Niagara Component"));
+  RightShoot->SetupAttachment(Root);
+  LeftShoot = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Left Niagara Component"));
+  LeftShoot->SetupAttachment(Root);
 }
 
 // Called when the game starts or when spawned

@@ -6,11 +6,23 @@
 #include "Components/ActorComponent.h"
 #include "TimerManager.h"
 #include "NiagaraSystem.h"
-#include "NiagaraComponent.h"
+
 #include "NiagaraFunctionLibrary.h"
 #include "BoatShootComponent.generated.h"
 
 class ABoatProjectile;
+
+UDELEGATE(BlueprintAuthorityOnly)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FStartVfxLeft);
+
+UDELEGATE(BlueprintAuthorityOnly)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FStartVfxRight);
+
+UDELEGATE(BlueprintAuthorityOnly)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEndVfxLeft);
+
+UDELEGATE(BlueprintAuthorityOnly)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEndVfxRight);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BOATSINPLAZAMAYOR_API UBoatShootComponent : public UActorComponent
@@ -61,9 +73,6 @@ public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Shoot | Reloading", meta = (AllowPrivateAccess = "true"))
   float RightReloadingTime = 2.0f;
 
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
-  UNiagaraSystem* Smoke;
-
   /// --- Shoot Variables---
   UFUNCTION(BlueprintCallable)
   void StartReloadingLeftSide();
@@ -83,9 +92,14 @@ public:
   UFUNCTION()
   void RightReloadingComplete();
 
-	UFUNCTION(BlueprintCallable)
-	void StartVfxReloading( FVector LocationToSpawn);
 
-	UFUNCTION(BlueprintCallable)
-	void EndVfxReloading();
+  UPROPERTY(BlueprintAssignable)
+  FStartVfxLeft StartVfxLeft;
+  UPROPERTY(BlueprintAssignable)
+  FStartVfxRight StartVfxRight;
+  UPROPERTY(BlueprintAssignable)
+  FEndVfxLeft EndVfxLeft;
+  UPROPERTY(BlueprintAssignable)
+  FEndVfxRight EndVfxRight;
+
 };
