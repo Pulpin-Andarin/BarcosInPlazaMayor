@@ -61,6 +61,8 @@ public:
   UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
   UBoatShootComponent* BoatShootComponent;
 
+  
+
 protected:
   // Called when the game starts or when spawned
   virtual void BeginPlay() override;

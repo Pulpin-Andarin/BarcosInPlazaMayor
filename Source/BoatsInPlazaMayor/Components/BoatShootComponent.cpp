@@ -4,6 +4,7 @@
 #include "BoatShootComponent.h"
 #include <BoatsInPlazaMayor/Projectiles/BoatProjectile.h>
 #include "Components/SphereComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 UBoatShootComponent::UBoatShootComponent()
@@ -61,6 +62,7 @@ void UBoatShootComponent::StartReloadingOnSide(bool& SideBool, float cooldown, F
 {
   SideBool = true;
   FTimerHandle Handle;
+  
   GetWorld()->GetTimerManager().SetTimer(Handle, TimerCallback, cooldown, false);
 }
 
@@ -83,5 +85,15 @@ void UBoatShootComponent::LeftReloadingComplete()
 void UBoatShootComponent::RightReloadingComplete()
 {
   bReloadingRight = false;
+}
+
+void UBoatShootComponent::StartVfxReloading(FVector LocationToSpawn)
+{
+    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Smoke, LocationToSpawn);
+}
+
+void UBoatShootComponent::EndVfxReloading()
+{
+    
 }
 
