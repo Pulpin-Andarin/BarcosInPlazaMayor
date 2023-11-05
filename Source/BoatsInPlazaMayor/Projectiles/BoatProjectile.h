@@ -40,4 +40,7 @@ public:
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
   float ProjectileVelocity = 0.f;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
+  float Damage = 10.f;
 };
