@@ -39,6 +39,7 @@ ABoat::ABoat()
   FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
   BoatShootComponent = CreateDefaultSubobject<UBoatShootComponent>(TEXT("BoatShootComponent"));
+
 }
 
 // Called when the game starts or when spawned
@@ -55,12 +56,13 @@ void ABoat::BeginPlay()
     }
   }
 
+  //FloatingMovementComponent = Cast<UFloatingMovementComponent>(FindComponentByClass(UFloatingMovementComponent::StaticClass()));
 
-  if (Controller != nullptr)
-  {
-      Root->AddForce(FVector(0,0,0) * Root->GetMass(), NAME_None, true);
-      Root->AddForce(FVector(0, 0, 0) * Root->GetMass(), NAME_None, true);
-  }
+  //if (Controller != nullptr)
+  //{
+  //    Root->AddForce(FVector(0,0,0) * Root->GetMass(), NAME_None, true);
+  //    Root->AddForce(FVector(0, 0, 0) * Root->GetMass(), NAME_None, true);
+  //}
 
 }
 
@@ -68,6 +70,9 @@ void ABoat::BeginPlay()
 void ABoat::Tick(float DeltaTime)
 {
   Super::Tick(DeltaTime);
+
+  //FVector v = GetVelocity().Normalize;
+  //SetActorRotation(v.Rotation());
 }
 
 // Called to bind functionality to input
@@ -96,43 +101,85 @@ void ABoat::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ABoat::Move(const FInputActionValue& Value)
 {
-    // input is a Vector2D
-    FVector2D MovementVector = Value.Get<FVector2D>();
-    FVector Velocity = GetVelocity();
-    int Speed = (int)Velocity.Length();
-   
-    //Calculo de fuerza
-    float ForceX = MovementVector.X;
-    float ForceY = MovementVector.Y;
+  // input is a Vector2D
+  FVector2D MovementVector = Value.Get<FVector2D>();
 
-    FVector Forward = Root->GetForwardVector();
-    FVector Right = Root->GetRightVector();
+  if (Controller != nullptr)
+  {
+    // find out which way is forward
+    const FRotator Rotation = Controller->GetControlRotation();
+    const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-    FVector ForceXToAdd = Right * ForceX* 5;
-    FVector ForceYToAdd = Forward * ForceY*0.05;
+    // get forward vector
+    const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-    // Aplicamos la fuerza
-    if (Controller != nullptr)
-    {
-      Root->AddForce(ForceXToAdd * Root->GetMass(), NAME_None, true);
-      Root->AddForce(ForceYToAdd * Root->GetMass(), NAME_None, true);
-    }
+    // get right vector 
+    const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+    // add movement 
+    AddMovementInput(Root->GetRightVector(), MovementVector.X);
+    AddMovementInput(Root->GetForwardVector(), MovementVector.Y);
 
     // Calculo de rotacion 
+  /*  FVector Velocity = GetVelocity();
+    FRotator Rot = GetActorRotation();
+    Velocity = Rot.UnrotateVector(Velocity);
+    FRotator(Velocity.X, Velocity.Y, Velocity.Z);*/
+    //FVector Velocity = GetVelocity();
+    //int Speed = (int)Velocity.Length();
+    ////FVector xVector{ GetActorRotation().Roll, 0.0f, 0.0f };
+    //FRotator DesiredRotation = UKismetMathLibrary::MakeRotationFromAxes(Velocity, FVector::CrossProduct(FVector::RightVector, Velocity), FVector::RightVector);
 
-    FVector xVector{GetActorRotation().Roll, 0.0f, 0.0f };
-    FRotator DesiredRotation = UKismetMathLibrary::MakeRotationFromAxes(Velocity, FVector::CrossProduct(FVector::UpVector, Velocity), FVector::UpVector);
+    //FRotator ActorRotation = GetActorRotation();
 
-    FRotator ActorRotation = GetActorRotation();
+    //FRotator lerpedvalue = FMath::RInterpTo(ActorRotation, DesiredRotation, GetWorld()->GetDeltaSeconds(), 0.2f);
 
-    FRotator lerpedvalue = FMath::RInterpTo(ActorRotation, DesiredRotation, GetWorld()->GetDeltaSeconds(), 0.01f * Speed );
+    //// Aplicamos la rotacion
+    //if (MovementVector.Y != -1) {
 
-    // Aplicamos la rotacion
-    if (MovementVector.Y != -1) {
-
-        SetActorRotation(FRotator(ActorRotation.Pitch, lerpedvalue.Yaw, ActorRotation.Roll));
-    }
+    //  SetActorRotation(FRotator(lerpedvalue.Pitch, lerpedvalue.Yaw, lerpedvalue.Roll));
+    //}
+  }
 }
+//void ABoat::Move(const FInputActionValue& Value)
+//{
+//    // input is a Vector2D
+//    FVector2D MovementVector = Value.Get<FVector2D>();
+//    FVector Velocity = GetVelocity();
+//    int Speed = (int)Velocity.Length();
+//   
+//    //Calculo de fuerza
+//    float ForceX = MovementVector.X;
+//    float ForceY = MovementVector.Y;
+//
+//    FVector Forward = Root->GetForwardVector();
+//    FVector Right = Root->GetRightVector();
+//
+//    FVector ForceXToAdd = Right * ForceX* 5;
+//    FVector ForceYToAdd = Forward * ForceY*0.05;
+//
+//    // Aplicamos la fuerza
+//    if (Controller != nullptr)
+//    {
+//      Root->AddForce(ForceXToAdd * Root->GetMass(), NAME_None, true);
+//      Root->AddForce(ForceYToAdd * Root->GetMass(), NAME_None, true);
+//    }
+//
+//    // Calculo de rotacion 
+//
+//    FVector xVector{GetActorRotation().Roll, 0.0f, 0.0f };
+//    FRotator DesiredRotation = UKismetMathLibrary::MakeRotationFromAxes(Velocity, FVector::CrossProduct(FVector::UpVector, Velocity), FVector::UpVector);
+//
+//    FRotator ActorRotation = GetActorRotation();
+//
+//    FRotator lerpedvalue = FMath::RInterpTo(ActorRotation, DesiredRotation, GetWorld()->GetDeltaSeconds(), 0.01f * Speed );
+//
+//    // Aplicamos la rotacion
+//    if (MovementVector.Y != -1) {
+//
+//        SetActorRotation(FRotator(ActorRotation.Pitch, lerpedvalue.Yaw, ActorRotation.Roll));
+//    }
+//}
 
 void ABoat::Look(const FInputActionValue& Value)
 {
