@@ -9,9 +9,24 @@
 /**
  * 
  */
+
+class UBoatShootComponent;
+
 UCLASS()
 class BOATSINPLAZAMAYOR_API AShipAIController : public AAIController
 {
 	GENERATED_BODY()
+
+private:
+
+	UBoatShootComponent* ShootComponent;
+
+protected:
+
+	virtual void BeginPlay() override;
 	
+public:
+
+	void Attack();
+
 };
