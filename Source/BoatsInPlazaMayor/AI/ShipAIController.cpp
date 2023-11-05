@@ -9,8 +9,11 @@
 
 void AShipAIController::BeginPlay()
 {
+	Super::BeginPlay();
+
 	ShootComponent = GetComponentByClass<UBoatShootComponent>();
 }
+
 
 void AShipAIController::Attack()
 {
