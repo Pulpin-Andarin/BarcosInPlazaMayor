@@ -11,7 +11,7 @@ void AShipAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ShootComponent = GetComponentByClass<UBoatShootComponent>();
+	ShootComponent = GetPawn()->GetComponentByClass<UBoatShootComponent>();
 }
 
 
