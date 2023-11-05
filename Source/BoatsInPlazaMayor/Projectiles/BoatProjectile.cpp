@@ -11,11 +11,11 @@ ABoatProjectile::ABoatProjectile()
   // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
   PrimaryActorTick.bCanEverTick = true;
 
-  SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Component"));
-  RootComponent = SphereComponent;
-
   SphereProjectileComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere Projectile Component"));
-  SphereProjectileComponent->SetupAttachment(RootComponent);
+  RootComponent = SphereProjectileComponent;
+
+  SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Component"));
+  SphereComponent->SetupAttachment(RootComponent);
 
   ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
   ProjectileMovementComponent->UpdatedComponent = SphereProjectileComponent;
