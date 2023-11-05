@@ -33,7 +33,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "HealthComponent")
     void Healing(int Heal);
-
+    UFUNCTION(BlueprintCallable, Category = "HealthComponent")
     void Damage(int Damage);
 
 protected:
@@ -47,8 +47,8 @@ public:
 private:
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Health, meta = (AllowPrivateAccess = "true"))
-    int MaxHealth = 0;
+    int MaxHealth ;
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Health, meta = (AllowPrivateAccess = "true"))
-    int CurrentHealth = MaxHealth;
+    int CurrentHealth;
 };

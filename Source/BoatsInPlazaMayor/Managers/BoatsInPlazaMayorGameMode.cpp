@@ -7,7 +7,7 @@
 ABoatsInPlazaMayorGameMode::ABoatsInPlazaMayorGameMode()
 {
   // set default pawn class to our Blueprinted character
-  static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("Game/Blueprints/Ship/BP_MyShip"));
+  static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("Game/Blueprints/Ship/BP_Boat"));
   if (PlayerPawnBPClass.Class != NULL)
   {
     DefaultPawnClass = PlayerPawnBPClass.Class;
