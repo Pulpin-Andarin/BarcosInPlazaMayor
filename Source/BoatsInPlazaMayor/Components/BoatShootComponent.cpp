@@ -49,7 +49,7 @@ void UBoatShootComponent::StartReloadingLeftSide()
 
 void UBoatShootComponent::StartReloadingRightSide()
 {
-    StartVfxRight.Broadcast();
+  StartVfxRight.Broadcast();
   FTimerDelegate TimerCallback;
   TimerCallback.BindLambda([this]
     {
@@ -74,22 +74,23 @@ void UBoatShootComponent::Shoot(FTransform Transform, float Velocity)
   SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
   ABoatProjectile* ProjectileActor = GetWorld()->SpawnActorDeferred<ABoatProjectile>(BoatProjectileClass, Transform);
   ProjectileActor->SetProjectileVelocity(Velocity);
+  ProjectileActor->OwnerGunner = GetOwner();
   Transform.SetScale3D(FVector(0.5, 0.5, 0.5));
   ProjectileActor->FinishSpawning(Transform);
 }
 
 void UBoatShootComponent::LeftReloadingComplete()
 {
-    EndVfxLeft.Broadcast();
+  EndVfxLeft.Broadcast();
   bReloadingLeft = false;
 }
 
 void UBoatShootComponent::RightReloadingComplete()
 {
-    EndVfxRight.Broadcast();
+  EndVfxRight.Broadcast();
   bReloadingRight = false;
 }
 
- 
+
 
 

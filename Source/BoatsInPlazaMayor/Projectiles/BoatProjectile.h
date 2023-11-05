@@ -43,4 +43,7 @@ public:
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
   float Damage = 10.f;
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+  AActor* OwnerGunner;
 };

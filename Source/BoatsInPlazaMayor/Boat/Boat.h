@@ -14,6 +14,7 @@ class UInputMappingContext;
 class UInputAction;
 class UBoatShootComponent;
 struct FInputActionValue;
+class UFloatingPawnMovement;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplate, Log, All);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FRotateBoat, bool, direccion);
@@ -74,6 +75,13 @@ public:
   UPROPERTY(BlueprintAssignable)
   FRotateBoat RotateBoatEvent;
 
+  UFloatingPawnMovement* FloatingMovementComponent;
+
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Boat")
+  float ActualAcceleration;
+
+
 protected:
   // Called when the game starts or when spawned
   virtual void BeginPlay() override;
@@ -90,5 +98,12 @@ public:
   /** Called for looking input */
   void Look(const FInputActionValue& Value);
 
+  /** Called for looking input */
+  UFUNCTION(BlueprintCallable)
+	  void  SlowVelocity(float Percent, float Time);
 
+  void ResetAcceleration();
+
+  //Timer handle to manage the sparks delay.
+  FTimerHandle TimerHandle;
 };
