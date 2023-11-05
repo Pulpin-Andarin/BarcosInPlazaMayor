@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FUpdateLife);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BOATSINPLAZAMAYOR_API UHealthComponent : public UActorComponent
@@ -35,6 +36,9 @@ public:
     void Healing(int Heal);
     UFUNCTION(BlueprintCallable, Category = "HealthComponent")
     void Damage(int Damage);
+
+    UPROPERTY(BlueprintAssignable)
+    FUpdateLife UpdateLifeEvent;
 
 protected:
 	// Called when the game starts
