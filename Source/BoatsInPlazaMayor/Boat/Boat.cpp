@@ -11,6 +11,9 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "BoatsInPlazaMayor/Components/BoatShootComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "GameFramework/MovementComponent.h"
+#include "GameFramework/PawnMovementComponent.h"
 
 // Sets default values
 ABoat::ABoat()
@@ -117,9 +120,26 @@ void ABoat::Move(const FInputActionValue& Value)
     const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
     // add movement 
-    AddMovementInput(Root->GetRightVector(), MovementVector.X);
-    AddMovementInput(Root->GetForwardVector(), MovementVector.Y);
 
+    AddMovementInput(Root->GetRightVector(), MovementVector.X);
+    if (MovementVector.Y != -1) {
+      AddMovementInput(Root->GetForwardVector(), MovementVector.Y);
+    }
+    FVector Velocity = GetMovementComponent()->Velocity;
+    
+    FVector actorLocation = GetActorLocation();
+
+    FVector suma = Velocity + actorLocation;
+
+    FRotator rotacion = UKismetMathLibrary::FindLookAtRotation(actorLocation, suma);
+
+
+    FRotator ActorRotation = GetActorRotation();
+
+    FRotator lerpedvalue = FMath::RInterpTo(ActorRotation, rotacion, GetWorld()->GetDeltaSeconds(), 0.5f);
+
+    SetActorRotation(lerpedvalue);
+    //SetActorRotation(direccion.Rotation());
     // Calculo de rotacion 
   /*  FVector Velocity = GetVelocity();
     FRotator Rot = GetActorRotation();
