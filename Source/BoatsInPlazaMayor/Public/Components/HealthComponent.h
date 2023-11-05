@@ -31,6 +31,11 @@ public:
     UFUNCTION(BlueprintCallable, Category = "HealthComponent")
     void FullHealth();
 
+    UFUNCTION(BlueprintCallable, Category = "HealthComponent")
+    void Healing(int Heal);
+
+    void Damage(int Damage);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

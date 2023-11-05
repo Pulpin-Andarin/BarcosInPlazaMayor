@@ -57,3 +57,24 @@ void UHealthComponent::FullHealth()
 {
     CurrentHealth = MaxHealth;
 }
+
+
+void UHealthComponent::Healing(int Heal) {
+
+	if (CurrentHealth + Heal < MaxHealth) {
+		CurrentHealth = CurrentHealth + Heal;
+	}
+
+
+
+}
+
+void UHealthComponent::Damage(int Damage) {
+
+	if (CurrentHealth - Damage < 0) {
+		CurrentHealth = CurrentHealth - Damage ;
+	}
+
+
+
+}
