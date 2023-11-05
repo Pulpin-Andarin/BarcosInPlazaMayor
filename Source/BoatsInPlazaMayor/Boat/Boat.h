@@ -14,7 +14,7 @@ class UInputAction;
 class UBoatShootComponent;
 struct FInputActionValue;
 
-DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogTemplate, Log, All);
 
 UCLASS()
 class BOATSINPLAZAMAYOR_API ABoat : public APawn

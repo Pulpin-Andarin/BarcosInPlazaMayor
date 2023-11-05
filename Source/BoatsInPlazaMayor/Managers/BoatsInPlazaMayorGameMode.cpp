@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "BoatsInPlazaMayorGameMode.h"
-#include "BoatsInPlazaMayor/BoatsInPlazaMayorCharacter.h"
+#include"BoatsInPlazaMayor/Boat/Boat.h"
 #include "UObject/ConstructorHelpers.h"
 
 ABoatsInPlazaMayorGameMode::ABoatsInPlazaMayorGameMode()
