@@ -65,6 +65,9 @@ void UHealthComponent::Healing(int Heal) {
 	if (CurrentHealth + Heal < MaxHealth) {
 		CurrentHealth = CurrentHealth + Heal;
 	}
+	else if (CurrentHealth + Heal >= MaxHealth) {
+		CurrentHealth = MaxHealth;
+	}
 
 	UpdateLifeEvent.Broadcast();
 
