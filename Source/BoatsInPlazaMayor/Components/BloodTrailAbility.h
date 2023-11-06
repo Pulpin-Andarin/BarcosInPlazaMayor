@@ -7,22 +7,25 @@
 #include "BloodTrailAbility.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BOATSINPLAZAMAYOR_API UBloodTrailAbility : public UActorComponent
 {
-	GENERATED_BODY()
+  GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	UBloodTrailAbility();
+public:
+  // Sets default values for this component's properties
+  UBloodTrailAbility();
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+  // Called when the game starts
+  virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+public:
+  // Called every frame
+  virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
+  int Damage = 1.f;
+
 };

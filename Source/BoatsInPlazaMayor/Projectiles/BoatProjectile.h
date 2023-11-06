@@ -42,7 +42,7 @@ public:
   float ProjectileVelocity = 0.f;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Shoot, meta = (AllowPrivateAccess = "true"))
-  float Damage = 10.f;
+  int Damage = 10.f;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
   AActor* OwnerGunner;
