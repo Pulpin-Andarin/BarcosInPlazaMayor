@@ -13,3 +13,14 @@ ABoatsInPlazaMayorGameMode::ABoatsInPlazaMayorGameMode()
     DefaultPawnClass = PlayerPawnBPClass.Class;
   }
 }
+
+void ABoatsInPlazaMayorGameMode::AddEnemyDeath()
+{
+  TotalDeaths++;
+  if (TotalEnemies == TotalDeaths)
+  {
+    AllEnemiesAreDeath.Broadcast();
+  }
+}
+
+

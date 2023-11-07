@@ -6,85 +6,89 @@
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+  // Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+  // off to improve performance if you don't need them.
+  PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+  // ...
 }
 
 
 // Called when the game starts
 void UHealthComponent::BeginPlay()
 {
-	Super::BeginPlay();
-	CurrentHealth = MaxHealth;
-	// ...
-	UpdateLifeEvent.Broadcast();
+  Super::BeginPlay();
+  CurrentHealth = MaxHealth;
+  // ...
+  UpdateLifeEvent.Broadcast();
 }
 
 
 // Called every frame
 void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+  Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+  // ...
 }
 
 int UHealthComponent::GetMaxHealth()
 {
-    return MaxHealth;
+  return MaxHealth;
 }
 
 int UHealthComponent::GetCurrentHealth()
 {
-    return CurrentHealth;
+  return CurrentHealth;
 }
 
 void UHealthComponent::SetMaxHealth(int MaxHealthValue)
 {
-    MaxHealth = MaxHealthValue;
+  MaxHealth = MaxHealthValue;
 }
 
 void UHealthComponent::SetCurrentHealth(int CurrentHealthValue)
 {
-    CurrentHealth = CurrentHealthValue;
+  CurrentHealth = CurrentHealthValue;
 }
 
 // RestoreFullHealth
 void UHealthComponent::FullHealth()
 {
-    CurrentHealth = MaxHealth;
-	UpdateLifeEvent.Broadcast();
+  CurrentHealth = MaxHealth;
+  UpdateLifeEvent.Broadcast();
 }
 
 
 void UHealthComponent::Healing(int Heal) {
 
-	if (CurrentHealth + Heal < MaxHealth) {
-		CurrentHealth = CurrentHealth + Heal;
-	}
-	else if (CurrentHealth + Heal >= MaxHealth) {
-		CurrentHealth = MaxHealth;
-	}
+  if (CurrentHealth + Heal < MaxHealth) {
+    CurrentHealth = CurrentHealth + Heal;
+  }
+  else if (CurrentHealth + Heal >= MaxHealth) {
+    CurrentHealth = MaxHealth;
+  }
 
-	UpdateLifeEvent.Broadcast();
+  UpdateLifeEvent.Broadcast();
 
 }
 
 void UHealthComponent::Damage(int Damage) {
-	if (CurrentHealth - Damage <= 0) {
 
-		CurrentHealth = 0;
-		Dead.Broadcast();
-	}
-	else {
-		CurrentHealth -= Damage;
-	}
+  if (CurrentHealth > 0)
+  {
+    if (CurrentHealth - Damage <= 0) {
 
-	UE_LOG(LogTemp, Warning, TEXT("Salud despues del danho: %d"), CurrentHealth);
-	UpdateLifeEvent.Broadcast();
+      CurrentHealth = 0;
+      Dead.Broadcast();
+    }
+    else {
+      CurrentHealth -= Damage;
+    }
+
+    UE_LOG(LogTemp, Warning, TEXT("Salud despues del danho: %d"), CurrentHealth);
+    UpdateLifeEvent.Broadcast();
+  }
 }
 
 

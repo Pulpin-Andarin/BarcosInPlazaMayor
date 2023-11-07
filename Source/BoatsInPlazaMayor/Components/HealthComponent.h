@@ -36,6 +36,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "HealthComponent")
     void Healing(int Heal);
+
     UFUNCTION(BlueprintCallable, Category = "HealthComponent")
     void Damage(int Damage);
 
