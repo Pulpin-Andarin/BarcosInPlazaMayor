@@ -74,8 +74,10 @@ void UHealthComponent::Healing(int Heal) {
 }
 
 void UHealthComponent::Damage(int Damage) {
-	if (CurrentHealth - Damage < 0) {
+	if (CurrentHealth - Damage <= 0) {
+
 		CurrentHealth = 0;
+		Dead.Broadcast();
 	}
 	else {
 		CurrentHealth -= Damage;

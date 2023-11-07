@@ -6,12 +6,14 @@
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDead);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FUpdateLife);
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BOATSINPLAZAMAYOR_API UHealthComponent : public UActorComponent
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
@@ -39,6 +41,9 @@ public:
 
     UPROPERTY(BlueprintAssignable)
     FUpdateLife UpdateLifeEvent;
+
+    UPROPERTY(BlueprintAssignable)
+    FDead Dead;
 
 protected:
 	// Called when the game starts
