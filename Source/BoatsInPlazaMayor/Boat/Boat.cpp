@@ -114,43 +114,47 @@ void ABoat::Move(const FInputActionValue& Value)
 
   if (Controller != nullptr)
   {
-    // find out which way is forward
-    const FRotator Rotation = Controller->GetControlRotation();
-    const FRotator YawRotation(0, Rotation.Yaw, 0);
+    //// find out which way is forward
+    //const FRotator Rotation = Controller->GetControlRotation();
+    //const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-    // get forward vector
-    const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+    //// get forward vector
+    //const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-    // get right vector 
-    const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+    //// get right vector 
+    //const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
     // add movement 
 
+    FRotator Rotation = GetActorRotation();
     if (MovementVector.X > 0) {
-        RotateBoatEvent.Broadcast(true);
+      RotateBoatEvent.Broadcast(true);
+      Rotation.Yaw = Rotation.Yaw + BoatRotationRate;
     }
-    else if (MovementVector.X < 0){
-        RotateBoatEvent.Broadcast(false);
+    else if (MovementVector.X < 0) {
+      RotateBoatEvent.Broadcast(false);
+
+      Rotation.Yaw = Rotation.Yaw - BoatRotationRate;
     }
 
-    AddMovementInput(Root->GetRightVector(), MovementVector.X);
+    SetActorRotation(Rotation);
+
+    //AddMovementInput(Root->GetRightVector(), MovementVector.X);
     if (MovementVector.Y != -1) {
       AddMovementInput(Root->GetForwardVector(), MovementVector.Y);
     }
-    FVector Velocity = GetMovementComponent()->Velocity;
-    
-    FVector actorLocation = GetActorLocation();
 
-    FVector suma = Velocity + actorLocation;
+    //FVector Velocity = GetMovementComponent()->Velocity;
+    //FVector actorLocation = GetActorLocation();
+    //FVector suma = Velocity + actorLocation;
+    //FRotator rotacion = UKismetMathLibrary::FindLookAtRotation(actorLocation, suma);
+    //FRotator ActorRotation = GetActorRotation();
+    //FRotator lerpedvalue = FMath::RInterpTo(ActorRotation, rotacion, GetWorld()->GetDeltaSeconds(), 0.5f);
+    //SetActorRotation(lerpedvalue);
 
-    FRotator rotacion = UKismetMathLibrary::FindLookAtRotation(actorLocation, suma);
 
 
-    FRotator ActorRotation = GetActorRotation();
 
-    FRotator lerpedvalue = FMath::RInterpTo(ActorRotation, rotacion, GetWorld()->GetDeltaSeconds(), 0.5f);
-
-    SetActorRotation(lerpedvalue);
     //SetActorRotation(direccion.Rotation());
     // Calculo de rotacion 
   /*  FVector Velocity = GetVelocity();
@@ -228,18 +232,18 @@ void ABoat::Look(const FInputActionValue& Value)
 
 void ABoat::SlowVelocity(float Percent, float Time)
 {
-    if (FloatingMovementComponent != nullptr) {
-        ActualAcceleration = FloatingMovementComponent->Acceleration;
-        FloatingMovementComponent->Acceleration -= ActualAcceleration * Percent;
-    }
-    GetWorldTimerManager().ClearTimer(TimerHandle);
-    GetWorldTimerManager().SetTimer(TimerHandle, this, &ABoat::ResetAcceleration, Time, false);
+  if (FloatingMovementComponent != nullptr) {
+    ActualAcceleration = FloatingMovementComponent->Acceleration;
+    FloatingMovementComponent->Acceleration -= ActualAcceleration * Percent;
+  }
+  GetWorldTimerManager().ClearTimer(TimerHandle);
+  GetWorldTimerManager().SetTimer(TimerHandle, this, &ABoat::ResetAcceleration, Time, false);
 }
 
 void ABoat::ResetAcceleration()
 {
-    if (FloatingMovementComponent != nullptr) {
-        FloatingMovementComponent->Acceleration = ActualAcceleration;
-    }
+  if (FloatingMovementComponent != nullptr) {
+    FloatingMovementComponent->Acceleration = ActualAcceleration;
+  }
 }
 

@@ -81,6 +81,8 @@ public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Boat")
   float ActualAcceleration;
 
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Boat")
+  float BoatRotationRate = 0.5f;
 
 protected:
   // Called when the game starts or when spawned
@@ -100,7 +102,7 @@ public:
 
   /** Called for looking input */
   UFUNCTION(BlueprintCallable)
-	  void  SlowVelocity(float Percent, float Time);
+  void  SlowVelocity(float Percent, float Time);
 
   void ResetAcceleration();
 
