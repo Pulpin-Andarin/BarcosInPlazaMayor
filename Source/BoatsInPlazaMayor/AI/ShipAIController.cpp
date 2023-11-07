@@ -9,24 +9,28 @@
 
 void AShipAIController::BeginPlay()
 {
-	Super::BeginPlay();
+  Super::BeginPlay();
 
-	ShootComponent = GetPawn()->GetComponentByClass<UBoatShootComponent>();
+  ShootComponent = GetPawn()->GetComponentByClass<UBoatShootComponent>();
 }
 
 
 void AShipAIController::Attack()
 {
-	AActor* Target = Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FName("Target")));
+  AActor* Target = Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FName("Target")));
 
-	FVector Velocity;
-	FTransform TransformProjectile;
+  if (IsValid(Target))
+  {
 
-	UGameplayStatics::SuggestProjectileVelocity_MovingTarget(GetWorld(), Velocity, GetPawn()->GetActorLocation(), Target);
+    FVector Velocity;
+    FTransform TransformProjectile;
 
-	FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(GetPawn()->GetActorLocation(), Target->GetActorLocation());
-	TransformProjectile.SetRotation(Rotation.Quaternion());
+    UGameplayStatics::SuggestProjectileVelocity_MovingTarget(GetWorld(), Velocity, GetPawn()->GetActorLocation(), Target);
+
+    FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(GetPawn()->GetActorLocation(), Target->GetActorLocation());
+    TransformProjectile.SetRotation(Rotation.Quaternion());
 
 
-	ShootComponent->Shoot(GetPawn()->GetTransform(), Velocity.Size());
+    ShootComponent->Shoot(GetPawn()->GetTransform(), Velocity.Size());
+  }
 }
