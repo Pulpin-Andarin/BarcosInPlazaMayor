@@ -84,6 +84,8 @@ void UHealthComponent::Damage(int Damage) {
     }
     else {
       CurrentHealth -= Damage;
+      HittedEvent.Broadcast();
+
     }
 
     UE_LOG(LogTemp, Warning, TEXT("Salud despues del danho: %d"), CurrentHealth);

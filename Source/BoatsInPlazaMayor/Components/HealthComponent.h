@@ -6,8 +6,13 @@
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDead);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FUpdateLife);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FHitted);
+
+
+
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -41,10 +46,15 @@ public:
     void Damage(int Damage);
 
     UPROPERTY(BlueprintAssignable)
+    FHitted HittedEvent;
+
+    UPROPERTY(BlueprintAssignable)
     FUpdateLife UpdateLifeEvent;
 
     UPROPERTY(BlueprintAssignable)
     FDead Dead;
+
+    
 
 protected:
 	// Called when the game starts
