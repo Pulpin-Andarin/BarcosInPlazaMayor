@@ -21,7 +21,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FRotateBoat, bool, direccion);
 
 
 
-UCLASS()
+UCLASS(BlueprintType)
 class BOATSINPLAZAMAYOR_API ABoat : public APawn
 {
   GENERATED_BODY()
