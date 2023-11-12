@@ -11,13 +11,14 @@ void AShipAIController::BeginPlay()
 {
   Super::BeginPlay();
 
-  ShootComponent = GetPawn()->GetComponentByClass<UBoatShootComponent>();
+  
 }
 
 
 void AShipAIController::Attack()
 {
   AActor* Target = Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FName("Target")));
+  ShootComponent = GetPawn()->GetComponentByClass<UBoatShootComponent>();
 
   if (IsValid(Target))
   {
