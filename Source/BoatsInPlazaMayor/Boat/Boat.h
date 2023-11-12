@@ -75,6 +75,7 @@ public:
   UPROPERTY(BlueprintAssignable)
   FRotateBoat RotateBoatEvent;
 
+  UPROPERTY(EditAnywhere, BlueprintReadWrite)
   UFloatingPawnMovement* FloatingMovementComponent;
 
 
