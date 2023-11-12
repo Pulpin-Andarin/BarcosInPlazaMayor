@@ -14,7 +14,7 @@ enum class EBoatType : uint8
 	, Rastro			UMETA(DisplayName = "Rastro")
 	, Ghost				UMETA(DisplayName = "Ghost")
 	, Wall				UMETA(DisplayName = "Wall")
-	, Classic			UMETA(DisplayName = "Classic")
+	, Rhino			UMETA(DisplayName = "Rhino")
 };
 
 
